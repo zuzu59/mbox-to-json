@@ -23,8 +23,13 @@ def mbox_to_json(mbox_path, json_path):
             'from': msg['from'],
             'to': msg['to'],
             'date': msg['date'],
-            'body': msg.get_body(preferencelist=('plain',)).get_content()
+            'body': ''
         }
+
+        # Vérifier si le corps du message existe
+        body = msg.get_body(preferencelist=('plain',))
+        if body:
+            email_data['body'] = body.get_content()
 
         # Ajouter les données de l'email à la liste
         emails_json.append(email_data)
